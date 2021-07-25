@@ -14,10 +14,18 @@ class JWTTokenGenerator {
 }
 
 describe('JWT TokenGenerator', () => {
-  it('should call sign with correct params', async () => {
-    const fakeJWT = jwt as jest.Mocked<typeof jwt>
-    const sut = new JWTTokenGenerator('any_secret')
+  let sut: JWTTokenGenerator
+  let fakeJWT: jest.Mocked<typeof jwt>
 
+  beforeAll(() => {
+    fakeJWT = jwt as jest.Mocked<typeof jwt>
+  })
+
+  beforeEach(() => {
+    sut = new JWTTokenGenerator('any_secret')
+  })
+
+  it('should call sign with correct params', async () => {
     await sut.generateToken({ key: 'any_key', expirationInMs: 1000 })
 
     expect(fakeJWT.sign).toHaveBeenCalledWith({ key: 'any_key' }, 'any_secret', { expiresIn: 1 })
