@@ -55,7 +55,7 @@ export class FacebookAPI implements LoadFacebookUserAPI {
     const appToken = await this.getAppToken()
 
     return this.httpGetClient.get({
-      url: `${this.baseUrl}/oauth/debug_token`,
+      url: `${this.baseUrl}/debug_token`,
       params: {
         access_token: appToken.access_token,
         input_token: clientToken
