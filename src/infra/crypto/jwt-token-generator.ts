@@ -5,8 +5,8 @@ import { sign } from 'jsonwebtoken'
 export class JWTTokenGenerator implements TokenGenerator {
   constructor (private readonly secret: string) {}
 
-  async generateToken (params: TokenGenerator.Params): Promise<TokenGenerator.Result> {
-    const expirationInSeconds = params.expirationInMs / 1000
-    return sign({ key: params.key }, this.secret, { expiresIn: expirationInSeconds })
+  async generateToken ({ expirationInMs, key }: TokenGenerator.Params): Promise<TokenGenerator.Result> {
+    const expirationInSeconds = expirationInMs / 1000
+    return sign({ key }, this.secret, { expiresIn: expirationInSeconds })
   }
 }
