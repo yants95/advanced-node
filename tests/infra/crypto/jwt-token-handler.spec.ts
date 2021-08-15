@@ -29,10 +29,12 @@ describe('JWTTokenHandler', () => {
       token = 'any_token'
       fakeJWT.sign.mockImplementation(() => token)
     })
+
     it('should call sign with correct params', async () => {
       await sut.generateToken({ key, expirationInMs })
 
       expect(fakeJWT.sign).toHaveBeenCalledWith({ key }, secret, { expiresIn: 1 })
+      expect(fakeJWT.sign).toHaveBeenCalledTimes(1)
     })
 
     it('should return token', async () => {
@@ -47,6 +49,21 @@ describe('JWTTokenHandler', () => {
       const promise = sut.generateToken({ key, expirationInMs })
 
       await expect(promise).rejects.toThrow(new Error('token_error'))
+    })
+  })
+
+  describe('validateToken', () => {
+    let token: string
+
+    beforeAll(() => {
+      token = 'any_token'
+      fakeJWT.sign.mockImplementation(() => token)
+    })
+    it('should call sign with correct params', async () => {
+      await sut.validateToken({ token })
+
+      expect(fakeJWT.verify).toHaveBeenCalledWith(token, secret)
+      expect(fakeJWT.verify).toHaveBeenCalledTimes(1)
     })
   })
 })
