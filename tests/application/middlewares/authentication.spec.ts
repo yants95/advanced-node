@@ -10,9 +10,12 @@ export class AutenticationMiddleware {
 }
 
 describe('AuthenticationMiddleware', () => {
-  it('should return 403 if authorization is empty', async () => {
-    const sut = new AutenticationMiddleware()
+  let sut: AutenticationMiddleware
 
+  beforeEach(() => {
+    sut = new AutenticationMiddleware()
+  })
+  it('should return 403 if authorization is empty', async () => {
     const httpResponse = await sut.handle({ authorization: '' })
 
     expect(httpResponse).toEqual({
@@ -22,8 +25,6 @@ describe('AuthenticationMiddleware', () => {
   })
 
   it('should return 403 if authorization is null', async () => {
-    const sut = new AutenticationMiddleware()
-
     const httpResponse = await sut.handle({ authorization: null as any })
 
     expect(httpResponse).toEqual({
@@ -33,8 +34,6 @@ describe('AuthenticationMiddleware', () => {
   })
 
   it('should return 403 if authorization is undefined', async () => {
-    const sut = new AutenticationMiddleware()
-
     const httpResponse = await sut.handle({ authorization: undefined as any })
 
     expect(httpResponse).toEqual({
