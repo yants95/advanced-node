@@ -7,33 +7,46 @@ jest.mock('jsonwebtoken')
 describe('JWTTokenHandler', () => {
   let sut: JWTTokenHandler
   let fakeJWT: jest.Mocked<typeof jwt>
+  let secret: string
 
   beforeAll(() => {
+    secret = 'any_secret'
     fakeJWT = jwt as jest.Mocked<typeof jwt>
-    fakeJWT.sign.mockImplementation(() => 'any_token')
   })
 
   beforeEach(() => {
-    sut = new JWTTokenHandler('any_secret')
+    sut = new JWTTokenHandler(secret)
   })
 
-  it('should call sign with correct params', async () => {
-    await sut.generateToken({ key: 'any_key', expirationInMs: 1000 })
+  describe('generateToken', () => {
+    let key: string
+    let token: string
+    let expirationInMs: number
 
-    expect(fakeJWT.sign).toHaveBeenCalledWith({ key: 'any_key' }, 'any_secret', { expiresIn: 1 })
-  })
+    beforeAll(() => {
+      key = 'any_key'
+      expirationInMs = 1000
+      token = 'any_token'
+      fakeJWT.sign.mockImplementation(() => token)
+    })
+    it('should call sign with correct params', async () => {
+      await sut.generateToken({ key, expirationInMs })
 
-  it('should call sign with correct params', async () => {
-    const token = await sut.generateToken({ key: 'any_key', expirationInMs: 1000 })
+      expect(fakeJWT.sign).toHaveBeenCalledWith({ key }, secret, { expiresIn: 1 })
+    })
 
-    expect(token).toBe('any_token')
-  })
+    it('should return token', async () => {
+      const generatedToken = await sut.generateToken({ key, expirationInMs })
 
-  it('should rethrow if sign throws', async () => {
-    fakeJWT.sign.mockImplementationOnce(() => { throw new Error('token_error') })
+      expect(generatedToken).toBe(token)
+    })
 
-    const promise = sut.generateToken({ key: 'any_key', expirationInMs: 1000 })
+    it('should rethrow if sign throws', async () => {
+      fakeJWT.sign.mockImplementationOnce(() => { throw new Error('token_error') })
 
-    await expect(promise).rejects.toThrow(new Error('token_error'))
+      const promise = sut.generateToken({ key, expirationInMs })
+
+      await expect(promise).rejects.toThrow(new Error('token_error'))
+    })
   })
 })
