@@ -21,10 +21,16 @@ describe('ChangeProfilePicture', () => {
   beforeEach(() => {
     sut = setupChangeProfilePicture(fileStorage, crypto)
   })
-  it('should call uploadFile with correct input', async () => {
+  it('should call UploadFile with correct input', async () => {
     await sut({ id: 'any_id', file })
 
     expect(fileStorage.upload).toHaveBeenCalledWith({ file, key: uuid })
     expect(fileStorage.upload).toHaveBeenCalledTimes(1)
+  })
+
+  it('should not call UploadFile when file is undefined', async () => {
+    await sut({ id: 'any_id', file: undefined })
+
+    expect(fileStorage.upload).not.toHaveBeenCalled()
   })
 })
