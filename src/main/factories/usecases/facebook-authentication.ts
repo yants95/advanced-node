@@ -1,6 +1,5 @@
 import { setupFacebookAuthentication, FacebookAuthentication } from '@/domain/usecases'
-import { makeFacebookAPI } from '@/main/factories/apis'
-import { makeJWTTokenHandler } from '@/main/factories/crypto'
+import { makeFacebookAPI, makeJWTTokenHandler } from '@/main/factories/gateways'
 import { makePgUserAccountRepo } from '@/main/factories/repos'
 
 export const makeFacebookAuthentication = (): FacebookAuthentication => {
