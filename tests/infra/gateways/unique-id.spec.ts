@@ -1,4 +1,4 @@
-import { UniqueID } from '@/infra/crypto'
+import { UniqueID } from '@/infra/gateways'
 
 describe('UniqueID', () => {
   it('should call uuid.v4', () => {

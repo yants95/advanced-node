@@ -1,5 +1,5 @@
-import { makeFakeDB } from '@/tests/infra/postgres/mocks'
-import { PgUser } from '@/infra/postgres/entities'
+import { makeFakeDB } from '@/tests/infra/repos/postgres/mocks'
+import { PgUser } from '@/infra/repos/postgres/entities'
 import { app } from '@/main/config/app'
 import { UnauthorizedError } from '@/application/errors'
 
@@ -12,7 +12,7 @@ describe('LoginRoutes', () => {
 
   const loadUserSpy = jest.fn()
 
-  jest.mock('@/infra/apis/facebook', () => ({
+  jest.mock('@/infra/gateways/facebook-api', () => ({
     FacebookAPI: jest.fn().mockReturnValue({
       loadUser: loadUserSpy
     })

@@ -1,5 +1,4 @@
-import { FacebookAPI } from '@/infra/apis'
-import { AxiosHttpClient } from '@/infra/http'
+import { FacebookAPI, AxiosHttpClient } from '@/infra/gateways'
 import { env } from '@/main/config/env'
 
 describe('FacebookAPI Integration Tests', () => {
