@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "author": "Yan Soares",
+  "license": "ISC",
+  "keywords": [],
   "scripts": {
     "start": "node  -r dotenv/config dist/main",
-    "dev": "ts-node-dev --respawn --transpile-only -r dotenv/config src/main",
+    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules -r dotenv/config src/main",
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -17,9 +20,19 @@
     "test:fb-api": "npm t -- -c ./jest.integration.config.js ./tests/external/facebook-api.test.ts",
     "prepare": "husky install"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.973.0",
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
+    "pg": "^8.6.0",
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
+    "typeorm": "0.2.29",
+    "uuid": "^8.3.2"
+  },
   "devDependencies": {
     "@jest-mock/express": "^1.4.3",
     "@types/aws-sdk": "^2.7.0",
@@ -50,18 +63,5 @@
   },
   "engines": {
     "node": "16.x"
-  },
-  "dependencies": {
-    "aws-sdk": "^2.973.0",
-    "axios": "^0.21.1",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "module-alias": "^2.2.2",
-    "pg": "^8.6.0",
-    "reflect-metadata": "^0.1.13",
-    "rimraf": "^3.0.2",
-    "typeorm": "0.2.29",
-    "uuid": "^8.3.2"
   }
 }
