@@ -1,12 +1,15 @@
+import { Controller } from '@/application/controllers'
 import { HttpResponse, noContent } from '@/application/helpers'
 import { ChangeProfilePicture } from '@/domain/usecases'
 
 type HttpRequest = { userId: string }
 
-export class DeletePictureController {
-  constructor (private readonly changeProfilePicture: ChangeProfilePicture) {}
+export class DeletePictureController extends Controller {
+  constructor (private readonly changeProfilePicture: ChangeProfilePicture) {
+    super()
+  }
 
-  async handle ({ userId }: HttpRequest): Promise<HttpResponse> {
+  async perform ({ userId }: HttpRequest): Promise<HttpResponse> {
     await this.changeProfilePicture({ id: userId })
     return noContent()
   }
@@ -23,6 +26,11 @@ describe('DeletePictureController', () => {
   beforeEach(() => {
     sut = new DeletePictureController(changeProfilePicture)
   })
+
+  it('should extender Controller', () => {
+    expect(sut).toBeInstanceOf(Controller)
+  })
+
   it('should call ChangeProfilePicture with correct input', async () => {
     await sut.handle({ userId: 'any_user_id' })
 
