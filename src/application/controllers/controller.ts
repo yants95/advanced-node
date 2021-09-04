@@ -10,11 +10,7 @@ export abstract class Controller {
 
   async handle (httpRequest: any): Promise<HttpResponse> {
     const error = this._validate(httpRequest)
-
-    if (error !== undefined) {
-      return badRequest(error)
-    }
-
+    if (error !== undefined) return badRequest(error)
     try {
       return await this.perform(httpRequest)
     } catch (error) {
