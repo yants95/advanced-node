@@ -18,6 +18,7 @@
     "test:cov": "npm t -- --coverage",
     "test:integration": "npm t -- --config ./jest.integration.config.js",
     "test:fb-api": "npm t -- -c ./jest.integration.config.js ./tests/external/facebook-api.test.ts",
+    "test:s3": "npm t -- -c ./jest.integration.config.js ./tests/external/aws-s3-file-storage.test.ts",
     "prepare": "husky install"
   },
   "dependencies": {
