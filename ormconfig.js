@@ -1,9 +1,11 @@
 module.exports = {
   type: 'postgres',
-  host: process.env.TYPEORM_HOST,
-  port: process.env.TYPEORM_PORT,
-  database: process.env.TYPEORM_DATABASE,
-  username: process.env.TYPEORM_USERNAME,
-  password: process.env.TYPEORM_PASSWORD,
-  entities: ['dist/infra/postgres/entities/index.js']
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  entities: [
+    `${process.env.TS_NODE_DEV === undefined ? 'dist' : 'src'}/infra/postgres/entities/index.js`
+  ]
 }
