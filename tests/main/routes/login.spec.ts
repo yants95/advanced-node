@@ -5,9 +5,10 @@ import { UnauthorizedError } from '@/application/errors'
 
 import request from 'supertest'
 import { IBackup } from 'pg-mem'
-import { getConnection } from 'typeorm'
+import { PgConnection } from '@/infra/repos/postgres/helpers'
 
 describe('LoginRoutes', () => {
+  let connection: PgConnection
   let backup: IBackup
 
   const loadUserSpy = jest.fn()
@@ -19,12 +20,13 @@ describe('LoginRoutes', () => {
   }))
 
   beforeAll(async () => {
+    connection = PgConnection.getInstance()
     const db = await makeFakeDB([PgUser])
     backup = db.backup()
   })
 
   afterAll(async () => {
-    await getConnection().close()
+    await connection.disconnect()
   })
 
   beforeEach(() => {
